@@ -1,0 +1,109 @@
+{
+  "query": {
+    "filtered": {
+      "query": {
+        "bool": {
+          "should": [
+            {
+              "query_string": {
+                "query": "*"
+              }
+            }
+          ]
+        }
+      },
+      "filter": {
+        "bool": {
+          "must_not": [
+            {
+              "exists": {
+                "field": "@host"
+              }
+            },
+            {
+              "exists": {
+                "field": "@host"
+              }
+            },
+            {
+              "exists": {
+                "field": "@facility"
+              }
+            },
+            {
+              "exists": {
+                "field": "@facility"
+              }
+            },
+            {
+              "exists": {
+                "field": "@facility"
+              }
+            },
+            {
+              "exists": {
+                "field": "@facility"
+              }
+            },
+            {
+              "exists": {
+                "field": "@facility"
+              }
+            },
+            {
+              "exists": {
+                "field": "@facility"
+              }
+            },
+            {
+              "exists": {
+                "field": "@facility"
+              }
+            }
+          ],
+          "must": [
+            {
+              "range": {
+                "@timestamp": {
+                  "gt": "now-30s"
+                }
+              }
+            },
+            {
+              "fquery": {
+                "query": {
+                  "query_string": {
+                    "query": "_exists_:method"
+                  }
+                },
+                "_cache": true
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "highlight": {
+    "fields": {
+      "host": {},
+      "program": {}
+    },
+    "fragment_size": 2147483647,
+    "pre_tags": [
+      "@start-highlight@"
+    ],
+    "post_tags": [
+      "@end-highlight@"
+    ]
+  },
+  "size": 250,
+  "sort": [
+    {
+      "@timestamp": {
+        "order": "desc",
+        "ignore_unmapped": true
+      }
+    }
+  ]
+}
